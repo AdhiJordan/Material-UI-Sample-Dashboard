@@ -9,7 +9,7 @@ class App extends  Component{
     super(props);
     this.state = {
       user: "",
-      age:25
+      age:22
     }
   }
 
