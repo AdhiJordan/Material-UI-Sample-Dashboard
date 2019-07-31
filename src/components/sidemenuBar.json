@@ -1,0 +1,17 @@
+[
+	{
+		"title": "Home",
+		"navLink": "/admin",
+		"imgUrl": "inbox"
+	},
+	{
+		"title": "Tools and Links",
+		"navLink": "/admin/tools",
+		"imgUrl": "mail"
+	},
+	{
+		"title": "Holiday Calender",
+		"navLink": "/admin/holidays",
+		"imgUrl": "inbox"
+	}
+]

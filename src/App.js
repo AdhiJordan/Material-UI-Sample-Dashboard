@@ -1,55 +1,95 @@
 import React, {Component} from 'react';
-import Display from './Display';
-import {connect} from 'react-redux';
+import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import axios from 'axios';
+import {sendUserData} from './actions/index.js'; 
+import Child from './Child';
 
-class App extends  Component{
+class Home extends Component{
   constructor(props){
     super(props);
     this.state = {
-      user: "",
-      age:29
+      name: "",
+      email: "",
+      mobile: "",
+      objData: {},
+      arrayData: [],
+      toggleStatus: true
     }
-  }
+  } 
 
-  componentWillReceiveProps(updatedValuefromRedux){
-    console.log("updatedValuefromRedux", updatedValuefromRedux)
-  }
+  // componentWillMount(){
+  //  alert("componentWillMount")
+  // }
 
-  getUser(e){
+  // componentDidMount(){
+  //  alert("componentDidMount")
+  // }
+
+  getName(event){
     this.setState({
-      user: e.target.value
+      name: event.target.value
+    })
+  } 
+
+  getEmail(event){
+    this.setState({
+      email: event.target.value
     })
   }
 
-  setData(e){
-    e.preventDefault();
-    let obj = {};
-    obj.name = this.state.user;
+  getMobile(event){
     this.setState({
-      user: ""
+      mobile: event.target.value
+    })
+  }
+
+  submitData(event){
+    event.preventDefault();
+    this.state.objData['name'] = this.state.name;
+    this.state.objData['email'] = this.state.email;
+    this.state.objData['mobile'] = this.state.mobile;
+    this.setState({
+      objData: this.state.objData
+    }, () => {
+      console.log("object herer", this.state.objData);
+        this.props.sendUserData(this.state.objData);
+        this.setState({
+          name: "",
+          email: "",
+          mobile: "",
+          objData: {}
+        })
     })
   }
 
   render(){
+    //alert("render");
     return(
       <div>
-       <p>My age:{this.state.age}</p>
-        <input type="text" value={this.state.user} onChange={this.getUser.bind(this)} />
-        <button onClick={this.setData.bind(this)}>Submit</button>
+        Home Page
+        <form onSubmit={this.submitData.bind(this)}>
+          <input type="text" value={this.state.name} placeholder="Enter Name.." onChange={this.getName.bind(this)} /><br />
+          <input type="email" value={this.state.email} placeholder="Enter Email.." onChange={this.getEmail.bind(this)} /><br />
+          <input type="number" value={this.state.mobile} placeholder="Enter Mobile.." onChange={this.getMobile.bind(this)} /><br />
+          <button type="submit">SUBMIT</button>
+        </form>
+        <Child />
       </div>
+
     );
   }
 }
 
 
+function mapStateToProps(state){
+  return {
+
+  };
+}
 
 
-export default (App);
+function mapDispatchToProps(dispatch){
+  return bindActionCreators ({sendUserData: sendUserData}, dispatch);
+}
 
-
-
-
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
